@@ -12,10 +12,15 @@ const TitleWrapper = styled.div`
 	margin-left: 20px;
 `;
 const Title = styled.h1`
-	font-size: 4.6rem;
+	font-size: 2.6rem;
 	max-width: 400px;
 	line-height: 1;
 	margin-bottom: 20px;
+	transform: translate(-115%, -36%);
+	@media only screen and (min-width: 1024px) {
+		font-size: 4.6rem;
+		transform: translate(0, 0);
+	}
 	span {
 		font-style: oblique;
 		margin-right: 20px;
@@ -24,15 +29,27 @@ const Title = styled.h1`
 const Subtitle = styled.p`
 	position: relative;
 	font-weight: 300;
-	color: #cacaca;
+	color: white;
+	transform: translate(-115%, -36%);
+
+	@media only screen and (min-width: 1024px) {
+		transform: translate(0, 0);
+		color: #cacaca;
+	}
 	::after {
 		position: absolute;
-		right: -50px;
+		right: -210px;
+
 		bottom: 12px;
 		content: '';
 		width: 300px;
 		height: 1px;
-		background-color: #cacaca;
+		background-color: white;
+		@media only screen and (min-width: 1024px) {
+			transform: translate(0, 0);
+			background-color: #cacaca;
+			right: -50px;
+		}
 	}
 `;
 

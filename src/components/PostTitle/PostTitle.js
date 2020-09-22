@@ -6,7 +6,7 @@ const Wrapper = styled.h4`
 	margin: 0 auto 40px;
 	width: fit-content;
 	font-size: 2.2rem;
-	width: 600px;
+	max-width: 600px;
 	text-align: center;
 `;
 

@@ -15,9 +15,12 @@ const PostCategoryTitle = styled.p`
 
 const PostPhoto = styled.img`
 	display: block;
-	width: 60vw;
+	width: 80vw;
 	max-width: 600px;
 	margin: 60px auto;
+	@media only screen and (min-width: 1024px) {
+		width: 60vw;
+	}
 `;
 
 const Post = () => {

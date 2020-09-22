@@ -10,10 +10,6 @@ const ChartSection = styled.section`
 `;
 
 const ChartWrapper = styled.div`
-	position: absolute;
-	margin: 0 auto;
-	left: 50%;
-	transform: translateX(-50%);
 	max-width: 1200px;
 `;
 
@@ -24,7 +20,6 @@ const Chart = () => {
 	const [mainData, setMainData] = useState({});
 	const [chartSectionHeight, setChartSectionHeight] = useState();
 	const [topOffset, setTopOffset] = useState(40);
-	const [chartHeight, setChartHeight] = useState(130);
 
 	useEffect(() => {
 		axios
@@ -33,6 +28,8 @@ const Chart = () => {
 				const ds = res.data.map((item) => {
 					return item.Confirmed;
 				});
+
+				console.log(res.data);
 				ds.forEach((item, i) => {
 					if (i === 0) {
 						setPrevDatasets((state) => [...state, item]);
@@ -68,19 +65,20 @@ const Chart = () => {
 			chartWrapper.current.style.top = `${topOffset}px`;
 			chartWrapper.current.style.width = '100%';
 			chartWrapper.current.style.left = '50%';
-			chartWrapper.current.style.transform = 'translatex(-50%)';
+			chartWrapper.current.style.transform = 'translatex(-49.25%)';
 		} else if (chartSection.current.getBoundingClientRect().top > topOffset) {
-			chartWrapper.current.style.position = 'absolute';
+			chartWrapper.current.style.position = 'static';
 			chartWrapper.current.style.top = '';
 			chartWrapper.current.style.width = '100%';
-			chartWrapper.current.style.left = '50%';
-			chartWrapper.current.style.transform = 'translatex(-50%)';
+			chartWrapper.current.style.left = '';
+			chartWrapper.current.style.transform = '';
+			chartWrapper.current.style.margin = '0 auto';
 			setDatasets([]);
 		}
 
 		for (
 			let step = 100, i = 1;
-			i <= prevDatasets.length, step > prevDatasets.length * -50;
+			i < prevDatasets.length, step > prevDatasets.length * -50;
 			i++, step -= 50
 		) {
 			if (
@@ -95,10 +93,12 @@ const Chart = () => {
 			chartSection.current.getBoundingClientRect().top <
 			-chartSectionHeight + window.innerHeight
 		) {
-			chartWrapper.current.style.position = 'sticky';
-			chartWrapper.current.style.top = `${topOffset}px`;
-			chartWrapper.current.style.left = 'initial';
-			chartWrapper.current.style.transform = 'translatex(0)';
+			chartWrapper.current.style.position = 'absolute';
+
+			chartWrapper.current.style.top = `${
+				chartSectionHeight - window.innerHeight + topOffset
+			}px`;
+			chartWrapper.current.style.transform = 'translatex(-50%)';
 		}
 	});
 
@@ -120,7 +120,7 @@ const Chart = () => {
 	useEffect(() => {
 		window.addEventListener('resize', handleHeightUpdate);
 		return () => {
-			window.removeEventListener('scroll', handleHeightUpdate);
+			window.removeEventListener('resize', handleHeightUpdate);
 		};
 	}, [handleHeightUpdate]);
 
@@ -136,11 +136,7 @@ const Chart = () => {
 				<PostTitle style={{ margin: '40px auto' }}>
 					Lorem ipsum dolor sit amet
 				</PostTitle>
-				<Line
-					options={{ responsive: true }}
-					data={mainData}
-					height={chartHeight}
-				/>
+				<Line options={{ responsive: true }} data={mainData} height={120} />
 			</ChartWrapper>
 		</ChartSection>
 	);
