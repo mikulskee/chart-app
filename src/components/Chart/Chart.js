@@ -10,7 +10,8 @@ const ChartSection = styled.section`
 `;
 
 const ChartWrapper = styled.div`
-	max-width: 1200px;
+	max-width: 90vw;
+	max-height: 60vh;
 `;
 
 const Chart = () => {
@@ -20,6 +21,7 @@ const Chart = () => {
 	const [mainData, setMainData] = useState({});
 	const [chartSectionHeight, setChartSectionHeight] = useState();
 	const [topOffset, setTopOffset] = useState(40);
+	const [chartHeight, setChartHeight] = useState(120);
 
 	useEffect(() => {
 		axios
@@ -127,6 +129,7 @@ const Chart = () => {
 	useEffect(() => {
 		handleScrollChart();
 	}, [topOffset]);
+
 	return (
 		<ChartSection
 			ref={chartSection}
@@ -136,7 +139,11 @@ const Chart = () => {
 				<PostTitle style={{ margin: '40px auto' }}>
 					Lorem ipsum dolor sit amet
 				</PostTitle>
-				<Line options={{ responsive: true }} data={mainData} height={120} />
+				<Line
+					options={{ responsive: true, maintainAspectRatio: false }}
+					data={mainData}
+					height={chartHeight}
+				/>
 			</ChartWrapper>
 		</ChartSection>
 	);
